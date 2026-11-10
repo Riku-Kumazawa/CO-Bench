@@ -15,7 +15,7 @@ class GreedyRefine:
         return f"Greedy Refinement"
 
     def __init__(self, problem_description, timeout=10, model='openai/o3-mini', max_iter=64,
-                 reasoning_effort='medium', additional_prompt=''):
+                 reasoning_effort='medium', additional_prompt='', llm_callable=None):
         self.problem_description = problem_description
         self.timeout = timeout
         self.model = model
@@ -23,6 +23,7 @@ class GreedyRefine:
         self.max_iter = max_iter
         self.reasoning_effort = reasoning_effort
         self.additional_prompt = additional_prompt
+        self.llm_callable = llm_callable or call_llm
 
     def step(self):
         if len(self.solution) == 0:
@@ -54,8 +55,10 @@ class GreedyRefine:
                 f"Your function has a {self.timeout}-second timeout; aim to return the best possible results within this limit."
             )
         prompt = prompt + '\n' + self.additional_prompt
-        response = call_llm(prompt, model=self.model, reasoning_effort=self.reasoning_effort)
+        response = self.llm_callable(prompt, model=self.model, reasoning_effort=self.reasoning_effort)
         code_blocks = extract_code_blocks(response)
+        if not code_blocks:
+            raise ValueError("The model response contains no Python code block.")
         code = textwrap.dedent(code_blocks[0])
         self.solution.append(Solution(code=code, response=response))
         return code

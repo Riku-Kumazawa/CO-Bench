@@ -1,0 +1,18 @@
+[project]
+name = "co-bench"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "cloudpickle>=3.1.2",
+    "huggingface-hub>=2.3.0",
+    "litellm>=1.103.10",
+    "matplotlib>=3.10",
+    "numpy>=2.4.6",
+    "openai>=2.54.0",
+    "ortools>=9.15.6755",
+    "psutil>=7.2.2",
+    "scipy>=1.17.1",
+    "tqdm>=4.70.1",
+]

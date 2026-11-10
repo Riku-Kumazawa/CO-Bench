@@ -1,0 +1,980 @@
+{
+  "schema_version": 2,
+  "status": "completed",
+  "started_at": "2026-11-10T01:30:35.767220+09:00",
+  "source_directory": "/home/rocklee/CO-Bench/runs/20261106-230111-b22819f8",
+  "source_feedback_sha256": "2e1760b1f01d8b16b08e0a62cb1ad7d04587027e7c5af1336282bc334fd8069e",
+  "settings": {
+    "model": "Qwen/Qwen3.8-27B",
+    "api_base": "http://127.0.0.1:8000/v1",
+    "request_parameters": {
+      "max_tokens": 32768,
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "presence_penalty": 0.0,
+      "seed": 0,
+      "timeout": 7200,
+      "num_retries": 0,
+      "max_retries": 0,
+      "drop_params": false,
+      "extra_body": {
+        "top_k": 20,
+        "min_p": 0.0,
+        "repetition_penalty": 1.0,
+        "chat_template_kwargs": {
+          "enable_thinking": true,
+          "reasoning_effort": "medium"
+        }
+      }
+    },
+    "thinking": true,
+    "reasoning_effort": "medium",
+    "timeout": 10,
+    "cpu_num": 1,
+    "seed": 0,
+    "max_tokens": 32768,
+    "generation_timeout": 7200,
+    "server_wait_timeout": 600,
+    "evaluation_split": "dev only; original full TSP set",
+    "selection": "latest submission regardless of dev score or failure",
+    "failure_feedback": "immediate previous code or final-answer text, plus its dev errors; no fallback",
+    "order": [
+      "support",
+      "neutral",
+      "switch"
+    ],
+    "enforce_eager": false,
+    "checkpoint_revision": "8c0b3d30f3ae96f5c7f774de704bf0ada83e422a"
+  },
+  "submissions_per_condition": 10,
+  "plan": [
+    {
+      "name": "support_02",
+      "condition": "support",
+      "submission": 2
+    },
+    {
+      "name": "neutral_02",
+      "condition": "neutral",
+      "submission": 2
+    },
+    {
+      "name": "switch_02",
+      "condition": "switch",
+      "submission": 2
+    },
+    {
+      "name": "support_03",
+      "condition": "support",
+      "submission": 3
+    },
+    {
+      "name": "neutral_03",
+      "condition": "neutral",
+      "submission": 3
+    },
+    {
+      "name": "switch_03",
+      "condition": "switch",
+      "submission": 3
+    },
+    {
+      "name": "support_04",
+      "condition": "support",
+      "submission": 4
+    },
+    {
+      "name": "neutral_04",
+      "condition": "neutral",
+      "submission": 4
+    },
+    {
+      "name": "switch_04",
+      "condition": "switch",
+      "submission": 4
+    },
+    {
+      "name": "support_05",
+      "condition": "support",
+      "submission": 5
+    },
+    {
+      "name": "neutral_05",
+      "condition": "neutral",
+      "submission": 5
+    },
+    {
+      "name": "switch_05",
+      "condition": "switch",
+      "submission": 5
+    },
+    {
+      "name": "support_06",
+      "condition": "support",
+      "submission": 6
+    },
+    {
+      "name": "neutral_06",
+      "condition": "neutral",
+      "submission": 6
+    },
+    {
+      "name": "switch_06",
+      "condition": "switch",
+      "submission": 6
+    },
+    {
+      "name": "support_07",
+      "condition": "support",
+      "submission": 7
+    },
+    {
+      "name": "neutral_07",
+      "condition": "neutral",
+      "submission": 7
+    },
+    {
+      "name": "switch_07",
+      "condition": "switch",
+      "submission": 7
+    },
+    {
+      "name": "support_08",
+      "condition": "support",
+      "submission": 8
+    },
+    {
+      "name": "neutral_08",
+      "condition": "neutral",
+      "submission": 8
+    },
+    {
+      "name": "switch_08",
+      "condition": "switch",
+      "submission": 8
+    },
+    {
+      "name": "support_09",
+      "condition": "support",
+      "submission": 9
+    },
+    {
+      "name": "neutral_09",
+      "condition": "neutral",
+      "submission": 9
+    },
+    {
+      "name": "switch_09",
+      "condition": "switch",
+      "submission": 9
+    },
+    {
+      "name": "support_10",
+      "condition": "support",
+      "submission": 10
+    },
+    {
+      "name": "neutral_10",
+      "condition": "neutral",
+      "submission": 10
+    },
+    {
+      "name": "switch_10",
+      "condition": "switch",
+      "submission": 10
+    }
+  ],
+  "task": {
+    "problem_description": "The Traveling Salesman Problem (TSP) is a classic combinatorial optimization problem where, given a set of cities with known pairwise distances, the objective is to find the shortest possible tour that visits each city exactly once and returns to the starting city. More formally, given a complete graph G = (V, E) with vertices V representing cities and edges E with weights representing distances, we seek to find a Hamiltonian cycle (a closed path visiting each vertex exactly once) of minimum total weight.\n\n# Implement in Solve Function\n\ndef solve(**kwargs):\n    \"\"\"\n    Solve a TSP instance.\n\n    Args:\n        - nodes (list): List of (x, y) coordinates representing cities in the TSP problem\n                     Format: [(x1, y1), (x2, y2), ..., (xn, yn)]\n\n    Returns:\n        dict: Solution information with:\n            - 'tour' (list): List of node indices representing the solution path\n                            Format: [0, 3, 1, ...] where numbers are indices into the nodes list\n    \"\"\"\n\n    return {\n        'tour': [],\n    }",
+    "data_dir": "/home/rocklee/CO-Bench/data",
+    "split": "original unsplit inputs, dev only",
+    "sizes": {
+      "tsp10000_test_concorde.txt": 16,
+      "tsp1000_test_concorde.txt": 128,
+      "tsp500_test_concorde.txt": 128
+    },
+    "hashes": {
+      "config.py": "6d142ddacf8f0d9b8558eae1b441a8c3278b419f6e39ec8e5b0296267c454afd",
+      "tsp10000_test_concorde.txt": "61c46caa0d839781f4a4296ab70d1f14b3a06c27119b4b02a47497665c284b0a",
+      "tsp1000_test_concorde.txt": "605a1508ac7be9e84c67cb21ebaf15a75868e0a119434ceb7f6e9e8b14335e79",
+      "tsp500_test_concorde.txt": "00e042cbf0de023afbbb5d794e65f2e1696987b61057d6e118cd92877f652c53"
+    }
+  },
+  "fingerprints": {
+    "tsp_continue.py": "bc86ff7fed94735c65a507b2157b3b682644372cc7cdd1afeadb75b684505695",
+    "scripts/tsp_worker.py": "b22ee49bf65b0ed7520d2ca0c9d2e74dca4c02e220529e6665f24fca08411625",
+    "main.py": "7f4e2a168f7d413d815d6a98126812b1a22456fe14031faf78d29a4bc3a7ed35",
+    "agents/utils.py": "35b2bf208f45b2adb89d77323f93ffd93aee7c67776c89aebf12ab568cea15c7",
+    "evaluation/controller.py": "55574fb0a5f6ae2670bd8653c20e42bb4b806689189d4cccbb47075fbaea6b08",
+    "evaluation/evaluate.py": "7b518138ea3b24f4abdcf26d052dc36ee90fa0e42c55ef28ff160023fe09591a",
+    "evaluation/utils.py": "b9eb42a878f4ff466225421bc6fd8b88135744af8fb06bee040db88d31fb9925",
+    "prompts/flow_refine.txt": "bb7f16b44eb7934a14b2adc78174bf0b4c456c0eef86b13fcb5a2b3b180dad1a",
+    "scripts/serve_qwen.sh": "07849bd9aeb1c08715263d30deb62508a741b8aa25aa285c3c6d671a45291136",
+    "uv.lock": "e6e690316d8c243a70aff0bf942b6c011a5803dade1006bc713ff5c83c8eb81a"
+  },
+  "environment": {
+    "python": "3.11.15 (main, May 10 2026, 19:28:18) [Clang 22.1.3 ]",
+    "packages": {
+      "litellm": "1.103.10",
+      "openai": "2.54.0",
+      "psutil": "7.2.2",
+      "cloudpickle": "3.1.2",
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "ortools": "9.15.6755",
+      "tqdm": "4.70.1"
+    }
+  },
+  "initial_hashes": {
+    "solution.py": "46b1bbb867d9b58dd45cb8ffd863ff098176bc8eaf94f06188ec7c9655d2c108",
+    "request.json": "82f7098371d11144eb684e9198030102f3029677c73154ae2a8da56765257c0e",
+    "response.json": "fe78711ea8955d44790777a0ef74c61f514f3f72aa05128a897e8da6d6c2ece9",
+    "response.txt": "97e1667725f0219ec84227a5fd63d571fda9f935889003a2df5512f929ff2a88",
+    "reasoning.txt": "2bc328209e5a83aee3f4c2e687ed2d4f308a18bf6f697878f4c34df2a8fa0fc6",
+    "prompt.txt": "8f729402739a34ec29ff984494a4843fe895ce9938173b894550a4cf8af523de",
+    "run.json": "ad9b96db8c17fc3d73f7a98bb137e0c582d079d8c00490cca7479d31fb662f80",
+    "dev.json": "3e22730b608e769ccaf1b83ed17bae7b5d0580fb6c5b47d25dda241df84740ce",
+    "dev_feedback.txt": "ff0080ed27e631bf8368300b4564163a9e6e593c7b2d2d70bea60c6c2c0039c0"
+  },
+  "server": {
+    "gpu_ids": "2,3,4,5",
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 4,
+    "max_model_len": 65536,
+    "enforce_eager": false,
+    "note": "Inherited initial code/result used eager mode; new generations use CUDA Graphs."
+  },
+  "candidates": {
+    "support_02": {
+      "name": "support_02",
+      "condition": "support",
+      "submission": 2,
+      "parent": "initial",
+      "prompt_sha256": "6666fdb385ab0477d26b90d235cedf76d78d793a0ebc789c839ee8616295b267",
+      "status": "evaluated",
+      "started_at": "2026-11-10T01:39:30.589995+09:00",
+      "generation_seconds": 438.3130924049983,
+      "usage": {
+        "completion_tokens": 21576,
+        "prompt_tokens": 4327,
+        "total_tokens": 25903,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "43bb8fcae9a246a9fbb993174cdbf7d091f6780456b9296047c283f4981c78b6",
+      "code_sha256": "88bef656646311f11e6568086a8718a54c12b5c3f8052d530b181fcb2ef5c101",
+      "next_parent": "support_02",
+      "dev_sha256": "d2682b639a80edab244ae656cb8a793c706ac7258e492de30876e7b0008b0b3c",
+      "finished_at": "2026-11-10T02:01:40.996757+09:00"
+    },
+    "neutral_02": {
+      "name": "neutral_02",
+      "condition": "neutral",
+      "submission": 2,
+      "parent": "initial",
+      "prompt_sha256": "9bea29696eeebcfe6b44e5ec3b0bf1ea954e3e916ff856b30bcca616d30430d8",
+      "status": "evaluated",
+      "started_at": "2026-11-10T02:01:41.023189+09:00",
+      "generation_seconds": 376.3548972480021,
+      "usage": {
+        "completion_tokens": 18770,
+        "prompt_tokens": 4315,
+        "total_tokens": 23085,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "a415257ffd6ab9d964f073f3ce29e4f037df166ccd10015e7d53743af52bd088",
+      "code_sha256": "dd1a7fe01799f99bed23c870c0310b1997a40a9a35ea6d76704f35ee088a1cea",
+      "next_parent": "neutral_02",
+      "dev_sha256": "1453803e47bae6f43dedbbf12f8b5b04f3a9800a4fd24166cabef2865be7c6d2",
+      "finished_at": "2026-11-10T02:30:18.957880+09:00"
+    },
+    "switch_02": {
+      "name": "switch_02",
+      "condition": "switch",
+      "submission": 2,
+      "parent": "initial",
+      "prompt_sha256": "0ad523cf233441bce6abdba12c087448734c365678bbb2760111c7747f3cbc1e",
+      "status": "evaluated",
+      "started_at": "2026-11-10T02:30:18.986632+09:00",
+      "generation_seconds": 292.7947295689992,
+      "usage": {
+        "completion_tokens": 14588,
+        "prompt_tokens": 4325,
+        "total_tokens": 18913,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "2a97f930db8ad49284794599d842ec0e587e12be6bc50e86542bbf3812ea3cf6",
+      "code_sha256": "701b5ee5f9a80e77f5cfecfc04954ac1553680aff8d3ba4f77bd68024ce59874",
+      "next_parent": "switch_02",
+      "dev_sha256": "598582cc7e88c5bd6afdf77ebad5fa2cde14cd9d1cadbb91b7ce082230362169",
+      "finished_at": "2026-11-10T02:50:51.351857+09:00"
+    },
+    "support_03": {
+      "name": "support_03",
+      "condition": "support",
+      "submission": 3,
+      "parent": "support_02",
+      "prompt_sha256": "dee8b005d805a2236f11e937f01ba68232c3b75606167ebbd08f0c6dcde1912c",
+      "status": "evaluated",
+      "started_at": "2026-11-10T02:50:51.376601+09:00",
+      "generation_seconds": 527.119491700003,
+      "usage": {
+        "completion_tokens": 26278,
+        "prompt_tokens": 3986,
+        "total_tokens": 30264,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "b42e753d847363ad7e79f7725842a1a5b06dc424c3eabe0112d998b05367b5b6",
+      "code_sha256": "c053abae00cf663ee26c25f896977195813d78ecb9194bcdef2337aceeb47acd",
+      "next_parent": "support_03",
+      "dev_sha256": "0aef71060d15b332528c8c1d09378cb658f9832a6bec95851e8582e1da73c18a",
+      "finished_at": "2026-11-10T03:32:29.829434+09:00"
+    },
+    "neutral_03": {
+      "name": "neutral_03",
+      "condition": "neutral",
+      "submission": 3,
+      "parent": "neutral_02",
+      "prompt_sha256": "33e1a343e50122437c6e9f43afd1cbef5097d24240d45cf0b057d87918e13957",
+      "status": "evaluated",
+      "started_at": "2026-11-10T03:32:29.863341+09:00",
+      "generation_seconds": 207.11838594000073,
+      "usage": {
+        "completion_tokens": 10276,
+        "prompt_tokens": 4569,
+        "total_tokens": 14845,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "aa665ddb8b62408014924d799f3673ee9bd219f1a57408dcd70dc77eed5107e2",
+      "code_sha256": "5fa93b639d9109a64b0ace9d09d9375de08e559d550ab3765a3dca4a634a617d",
+      "next_parent": "neutral_03",
+      "dev_sha256": "3887522f81540878b2ebc53f29de356d355d44767f1fca188c684202170bc806",
+      "finished_at": "2026-11-10T03:54:58.259642+09:00"
+    },
+    "switch_03": {
+      "name": "switch_03",
+      "condition": "switch",
+      "submission": 3,
+      "parent": "switch_02",
+      "prompt_sha256": "0666ce25bc0b29886c9ad0a7eb890a7b534909a4d87d47afe3acc33077878f4e",
+      "status": "evaluated",
+      "started_at": "2026-11-10T03:54:58.291400+09:00",
+      "generation_seconds": 267.3766477620011,
+      "usage": {
+        "completion_tokens": 13299,
+        "prompt_tokens": 4342,
+        "total_tokens": 17641,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "33616d58cbb9ffa1079cc46db84d170229ef82222f6a03419c8bcfb0e2b84e29",
+      "code_sha256": "3a24079ac15258b4e919f0c46b21e33835e49a771b6185dca364c2af73e2b139",
+      "next_parent": "switch_03",
+      "dev_sha256": "55d5c19e942bb8d855f12fc5b7fcb1e796cdc41d3546634c119a632b851f1724",
+      "finished_at": "2026-11-10T04:15:44.383308+09:00"
+    },
+    "support_04": {
+      "name": "support_04",
+      "condition": "support",
+      "submission": 4,
+      "parent": "support_03",
+      "prompt_sha256": "cf7998b0434c29730988069fc6c6ce4bf3b3035566d49afda19cdcfadc788a55",
+      "status": "evaluated",
+      "started_at": "2026-11-10T04:15:44.418254+09:00",
+      "generation_seconds": 222.21033171599993,
+      "usage": {
+        "completion_tokens": 10927,
+        "prompt_tokens": 6921,
+        "total_tokens": 17848,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "b0c38fd7fb377b5addac9d65cc1bf8b035115c0032806ec654e98ce35c897a1a",
+      "code_sha256": "8937b09fe9ecf04f78c7f5b90e047fdc287a48ff22c71644e6a84a755f6abc93",
+      "next_parent": "support_04",
+      "dev_sha256": "a98953d69f88c11c24e19931f5533a827be9f3acf33823ddb5cde28e8735ee6c",
+      "finished_at": "2026-11-10T04:21:04.716587+09:00"
+    },
+    "neutral_04": {
+      "name": "neutral_04",
+      "condition": "neutral",
+      "submission": 4,
+      "parent": "neutral_03",
+      "prompt_sha256": "407d9ff0d0097053d791fe0ccadab35a1c6d065a54db7728dfc1455da140101a",
+      "status": "evaluated",
+      "started_at": "2026-11-10T04:21:04.751786+09:00",
+      "generation_seconds": 222.55189772299855,
+      "usage": {
+        "completion_tokens": 10962,
+        "prompt_tokens": 6522,
+        "total_tokens": 17484,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "ee67ab5879dcfeb4150960f6d840bbff487c4615694b177ee048f1837ead9b54",
+      "code_sha256": "011ac38cbd56350b19f4c3fa12b67f321d6bde1899d681b2c3e7e09d822ccc80",
+      "next_parent": "neutral_04",
+      "dev_sha256": "1be927b38ea25766344a275b0797bc5a0152ebdfdbaedebfb72f45f30566957f",
+      "finished_at": "2026-11-10T04:38:33.858386+09:00"
+    },
+    "switch_04": {
+      "name": "switch_04",
+      "condition": "switch",
+      "submission": 4,
+      "parent": "switch_03",
+      "prompt_sha256": "98caba2634e55b7e8b1e78ef8d3e257393c0e53a3747a040ef35c4a34e5515f7",
+      "status": "evaluated",
+      "started_at": "2026-11-10T04:38:33.899408+09:00",
+      "generation_seconds": 449.2994750440048,
+      "usage": {
+        "completion_tokens": 22330,
+        "prompt_tokens": 5799,
+        "total_tokens": 28129,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "3ca7d7fb3b9b73fe4eae80279f110bdb85cb8b56ec704a99eccc0814db0a2be5",
+      "code_sha256": "26ef74889866c13f1092b2183dc87da52c6115bb1082ffcc4d0b7e5189e55bad",
+      "next_parent": "switch_04",
+      "dev_sha256": "54c32c98dc9ba155a67c0d0fd68634cf0877d5f4ac9f3d3818b2c960e0033d2e",
+      "finished_at": "2026-11-10T05:14:41.833905+09:00"
+    },
+    "support_05": {
+      "name": "support_05",
+      "condition": "support",
+      "submission": 5,
+      "parent": "support_04",
+      "prompt_sha256": "a2e46b5af5bb06d03a0f59dcbc8839959331dd805dbc97bca4435e77d08d52e4",
+      "status": "evaluated",
+      "started_at": "2026-11-10T05:14:41.879918+09:00",
+      "generation_seconds": 422.6555767769969,
+      "usage": {
+        "completion_tokens": 20870,
+        "prompt_tokens": 8226,
+        "total_tokens": 29096,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "5d19d980b53a19267ccbd446f0d97aaf79c89142b02d9003d56e4053c8f169d5",
+      "code_sha256": "54c7e9c3409eec11da0c8eadd8267eaec7072210309204a0d813c8be95815a6b",
+      "next_parent": "support_05",
+      "dev_sha256": "a05843cc6fdaf84e6391648ac058db9a24d7eb8ae4a0efe8bcdd660209e89045",
+      "finished_at": "2026-11-10T05:35:59.598669+09:00"
+    },
+    "neutral_05": {
+      "name": "neutral_05",
+      "condition": "neutral",
+      "submission": 5,
+      "parent": "neutral_04",
+      "prompt_sha256": "6934ea9f71f757314a4a4c1f01d83db0114ebe56c855ec032ff78e2570d0dff6",
+      "status": "evaluated",
+      "started_at": "2026-11-10T05:35:59.641581+09:00",
+      "generation_seconds": 253.65913471800013,
+      "usage": {
+        "completion_tokens": 12621,
+        "prompt_tokens": 4362,
+        "total_tokens": 16983,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "d070c8bfb3c1f2a321418716e292a0c5a7b4034a33d7dc3cd3d83b362647dc43",
+      "code_sha256": "ebe6fcb811845f922c94ae36545933fe84167ef99db23e7585f1dae6f856c779",
+      "next_parent": "neutral_05",
+      "dev_sha256": "128c34601802bb483e4f500e72baccf809d78e85fc6ca8f16e719527075cb90b",
+      "finished_at": "2026-11-10T05:43:26.474434+09:00"
+    },
+    "switch_05": {
+      "name": "switch_05",
+      "condition": "switch",
+      "submission": 5,
+      "parent": "switch_04",
+      "prompt_sha256": "aab477a65c18bb0b09bb3e55bd49381b579eec785012343c8e417a3fcf0ee2c0",
+      "status": "evaluated",
+      "started_at": "2026-11-10T05:43:26.520640+09:00",
+      "generation_seconds": 343.4370739299993,
+      "usage": {
+        "completion_tokens": 17026,
+        "prompt_tokens": 6430,
+        "total_tokens": 23456,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "c2b46871deb8285e68529e9667e9ebbfeb794a92fa879f4a2712a4f210df554f",
+      "code_sha256": "5e8d088c17ff94ff69fa02be7973fa5c14323139b93b0ab1b17ce51b08ee1437",
+      "next_parent": "switch_05",
+      "dev_sha256": "c84406bd340366ed7cd58128e67f91046da7f2e90491ce6a09b9a966977d58c4",
+      "finished_at": "2026-11-10T06:25:08.127056+09:00"
+    },
+    "support_06": {
+      "name": "support_06",
+      "condition": "support",
+      "submission": 6,
+      "parent": "support_05",
+      "prompt_sha256": "f9dc730276633ffac832e6eb60c8a22f773d8f5812cc03b3fa1396c2f3cdea4f",
+      "status": "evaluated",
+      "started_at": "2026-11-10T06:25:08.177265+09:00",
+      "generation_seconds": 360.7248628850066,
+      "usage": {
+        "completion_tokens": 17922,
+        "prompt_tokens": 5746,
+        "total_tokens": 23668,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "10820cf37891686481ccc6d3713394ef844e1a78110de6f507b5d030dba662b0",
+      "code_sha256": "80a59c934ad608bb447fdc8640ed1da0013e8b51885c53e3ce73f00500238b9c",
+      "next_parent": "support_06",
+      "dev_sha256": "6e4901e5b7673fcc046134306fe1ff6a373ab1b1ace1b6694d298d24ed280e7c",
+      "finished_at": "2026-11-10T06:44:33.969051+09:00"
+    },
+    "neutral_06": {
+      "name": "neutral_06",
+      "condition": "neutral",
+      "submission": 6,
+      "parent": "neutral_05",
+      "prompt_sha256": "3778629df2e8a5be77568dae427dcc6595b92a578ccad3489819426c6cedbc3f",
+      "status": "evaluated",
+      "started_at": "2026-11-10T06:44:34.021558+09:00",
+      "generation_seconds": 278.89086870999745,
+      "usage": {
+        "completion_tokens": 13762,
+        "prompt_tokens": 7343,
+        "total_tokens": 21105,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "6f569d5908f09fc1a305c1662d7e3302f3d085a1b42692e1bf87dc98cea8c102",
+      "code_sha256": "750c23130af8c0740e5a00e2d72fe5fd315cc3e12180b04f86edccef2f05f658",
+      "next_parent": "neutral_06",
+      "dev_sha256": "f773df648893d21380149891c53cfa946851f736e1d51397918d71f4d8823308",
+      "finished_at": "2026-11-10T07:23:34.541580+09:00"
+    },
+    "switch_06": {
+      "name": "switch_06",
+      "condition": "switch",
+      "submission": 6,
+      "parent": "switch_05",
+      "prompt_sha256": "fcfb3a958400e235bb586ae94caaf0473dead289438e43a1ce34bac6bba65616",
+      "status": "evaluated",
+      "started_at": "2026-11-10T07:23:34.598170+09:00",
+      "generation_seconds": 411.6470757779971,
+      "usage": {
+        "completion_tokens": 20360,
+        "prompt_tokens": 7708,
+        "total_tokens": 28068,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "b986350139dcbffee87a63fb5008e7d31ff4d9d85da952087aaabb6e696fdfd6",
+      "code_sha256": "e13013d2ee9105868c9db11d81363f60db7e25e9a775c9181564705847d18d2d",
+      "next_parent": "switch_06",
+      "dev_sha256": "1e8cf9f0b1e5e43a725528e9ec4a7c70731333e602a7aaffade51ac2c8263e78",
+      "finished_at": "2026-11-10T08:13:07.286268+09:00"
+    },
+    "support_07": {
+      "name": "support_07",
+      "condition": "support",
+      "submission": 7,
+      "parent": "support_06",
+      "prompt_sha256": "4c1f570413fbd5bd2881678c32334b1fc132feffcd41e811b3ebdc52fc1e8acc",
+      "status": "evaluated",
+      "started_at": "2026-11-10T08:13:07.349470+09:00",
+      "generation_seconds": 391.1565908720004,
+      "usage": {
+        "completion_tokens": 19303,
+        "prompt_tokens": 8849,
+        "total_tokens": 28152,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "f84ec0a791f2371824fa7d793b92bf8dc8f5f9415bb9616b5fe58822b7093575",
+      "code_sha256": "166eb2c5ddfdfc93f3fb9f2551642fadcc1c2d3de7d0a3c378182cac0b5d9395",
+      "next_parent": "support_07",
+      "dev_sha256": "9c3c85886c4f6c2c0efe1eb604446e6a0f104843c20f1ba5f5f8e6d40c2c3ea0",
+      "finished_at": "2026-11-10T08:32:30.672348+09:00"
+    },
+    "neutral_07": {
+      "name": "neutral_07",
+      "condition": "neutral",
+      "submission": 7,
+      "parent": "neutral_06",
+      "prompt_sha256": "b16c743ec3215524dae2e2d2b698affa0fa44a0df6a38213e79ad970806ac2c2",
+      "status": "evaluated",
+      "started_at": "2026-11-10T08:32:30.724964+09:00",
+      "generation_seconds": 180.84344059699652,
+      "usage": {
+        "completion_tokens": 8913,
+        "prompt_tokens": 5606,
+        "total_tokens": 14519,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "527f8d375ded0471ee73421e43060ebb19f34b26700c1fff606bc9c1d410246f",
+      "code_sha256": "0db76c53a4a4175ea42674edb80f27151cec08bf76703ca8bbd3ae82571a04ed",
+      "next_parent": "neutral_07",
+      "dev_sha256": "7e9d94a2abd6a3554cf871f8c1e716f4f272d5c49ed73c98b5426e0881d1e7ef",
+      "finished_at": "2026-11-10T09:19:52.744356+09:00"
+    },
+    "switch_07": {
+      "name": "switch_07",
+      "condition": "switch",
+      "submission": 7,
+      "parent": "switch_06",
+      "prompt_sha256": "f04f655a54f0d109bc29381d959c16594bd16c5509b50f7b443019afd6ba6d22",
+      "status": "evaluated",
+      "started_at": "2026-11-10T09:19:52.807174+09:00",
+      "generation_seconds": 418.2811637430059,
+      "usage": {
+        "completion_tokens": 20751,
+        "prompt_tokens": 6721,
+        "total_tokens": 27472,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "cc62865b9b612ca54e99a5741bc91e2a5eda532660a8c418177fe7f1f3dab54a",
+      "code_sha256": "15e88ecebed9ad88c58e72244c1890560a9863deaa2799f94b375586c095cd59",
+      "next_parent": "switch_07",
+      "dev_sha256": "bde76b00429ab41c7d941bba7465b335334c4d1a32f7c9d5f96497ae8048772c",
+      "finished_at": "2026-11-10T10:05:26.314469+09:00"
+    },
+    "support_08": {
+      "name": "support_08",
+      "condition": "support",
+      "submission": 8,
+      "parent": "support_07",
+      "prompt_sha256": "49c9947341b37544def63d4f1997010076c811c95b1bd8396cc7c011615adae1",
+      "status": "evaluated",
+      "started_at": "2026-11-10T10:05:26.376557+09:00",
+      "generation_seconds": 373.1520448670053,
+      "usage": {
+        "completion_tokens": 18423,
+        "prompt_tokens": 8597,
+        "total_tokens": 27020,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "fd134b404ba9352c418e7b6fa446b24fef9adb4d5e03c86b36a082cc39a30d1d",
+      "code_sha256": "07a8f7ae58f9924874eaaf5e2a49e98a51df5c3af00c048513eef88f2118ae36",
+      "next_parent": "support_08",
+      "dev_sha256": "1e06030e4846ba9035d02b0205335ee01ef71e24cbfcae5d96d0ea749e582c12",
+      "finished_at": "2026-11-10T10:27:02.498913+09:00"
+    },
+    "neutral_08": {
+      "name": "neutral_08",
+      "condition": "neutral",
+      "submission": 8,
+      "parent": "neutral_07",
+      "prompt_sha256": "1ca837a3e9b43925d7f09d9c763907bfe5aaf75a9b66caeea059ed5b88f3b3a5",
+      "status": "evaluated",
+      "started_at": "2026-11-10T10:27:02.549067+09:00",
+      "generation_seconds": 235.09913139900164,
+      "usage": {
+        "completion_tokens": 11625,
+        "prompt_tokens": 6332,
+        "total_tokens": 17957,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": "SyntaxError: invalid syntax (solution.py, line 108)",
+      "response_sha256": "d7a77cf924829375713f4b080f5a2f0ce35d3d98c2d6b944c222f9abc99f4ae5",
+      "code_sha256": "6afeb5cdd65cee16043b33f58f08b68bee3e0003f3305d1cfc0801d254869f90",
+      "next_parent": "neutral_08",
+      "dev_sha256": "920fcee0cde3f8aaf4d4b3e36866c65b4b80c18e9fd865f3a5d8cf564895a2c5",
+      "finished_at": "2026-11-10T10:30:57.680686+09:00"
+    },
+    "switch_08": {
+      "name": "switch_08",
+      "condition": "switch",
+      "submission": 8,
+      "parent": "switch_07",
+      "prompt_sha256": "fcaf82c16f38ec1050dbd0cf31f794c048c4ffc5c06592a27e4b6f3cfff31c67",
+      "status": "evaluated",
+      "started_at": "2026-11-10T10:30:57.733291+09:00",
+      "generation_seconds": 290.0020553929935,
+      "usage": {
+        "completion_tokens": 14183,
+        "prompt_tokens": 10252,
+        "total_tokens": 24435,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "a11e5459c24f2197b5a7eb9e70d674d91c65a7e85fee2251e310d07f6a4f842c",
+      "code_sha256": "2e9af7c8bbab58ce24bf148f506a769b71a379d4506c243c510671d66e34a800",
+      "next_parent": "switch_08",
+      "dev_sha256": "724e3fe7b448c36a9e5cba8901ed3966d54b6e5a774ea0d7181bf1aca044e42c",
+      "finished_at": "2026-11-10T11:18:33.968059+09:00"
+    },
+    "support_09": {
+      "name": "support_09",
+      "condition": "support",
+      "submission": 9,
+      "parent": "support_08",
+      "prompt_sha256": "ab822cd922d85a2055a5bb89c03860fd438c2fcf31628d3ecbd24da4c11201be",
+      "status": "evaluated",
+      "started_at": "2026-11-10T11:18:34.051024+09:00",
+      "generation_seconds": 306.60786093299976,
+      "usage": {
+        "completion_tokens": 15022,
+        "prompt_tokens": 10548,
+        "total_tokens": 25570,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "ff8bc16b171c4c57c13594de1c8d86ba81be9948e32a6bfa8537cd14a6be8111",
+      "code_sha256": "c4373ee474f1fb84aa4fb092eca247f9be84a1e25656254b24e40964273051b0",
+      "next_parent": "support_09",
+      "dev_sha256": "7c9542081cfb5907537c309baff96fdfc9f763862bbeff42efb24d9ae3a5472f",
+      "finished_at": "2026-11-10T11:40:57.249112+09:00"
+    },
+    "neutral_09": {
+      "name": "neutral_09",
+      "condition": "neutral",
+      "submission": 9,
+      "parent": "neutral_08",
+      "prompt_sha256": "18276d8dbe623337b2001f9c630786962bd67718391868864b5d32f562642a74",
+      "status": "evaluated",
+      "started_at": "2026-11-10T11:40:57.327823+09:00",
+      "generation_seconds": 96.94656813700567,
+      "usage": {
+        "completion_tokens": 4597,
+        "prompt_tokens": 8140,
+        "total_tokens": 12737,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "67170fef1a05c6d343141548a6939cd8bc7d330998d0b0df37dd2b8e2ce4875c",
+      "code_sha256": "3af2be5ae3949544fecb23ab3c1cc8d83e6c5f5d3e6a407846d4114e2b3226da",
+      "next_parent": "neutral_09",
+      "dev_sha256": "298613569dbcec5e6071d07dcd9ea63c7ab5bbafb006504953e42fc3a8376041",
+      "finished_at": "2026-11-10T11:45:43.530454+09:00"
+    },
+    "switch_09": {
+      "name": "switch_09",
+      "condition": "switch",
+      "submission": 9,
+      "parent": "switch_08",
+      "prompt_sha256": "d257976cff1780aebfa5cc01942215de76950312f8bab501eaed70c2e5c24e75",
+      "status": "evaluated",
+      "started_at": "2026-11-10T11:45:43.603570+09:00",
+      "generation_seconds": 489.84726391000004,
+      "usage": {
+        "completion_tokens": 24262,
+        "prompt_tokens": 8264,
+        "total_tokens": 32526,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "1dd3112970c3ca16b10c200dd697d4b5692bfc35528fd3699b29b10bdff047e1",
+      "code_sha256": "a8021358ff0a36e7c40dc76c8c710fbf4ced6202dfca68841903a51f8d748ff8",
+      "next_parent": "switch_09",
+      "dev_sha256": "fc3c6b884063ff335c3ff88e5760c3c7d649ac6e1ba78fcd44f59428f75583ae",
+      "finished_at": "2026-11-10T12:33:10.007705+09:00"
+    },
+    "support_10": {
+      "name": "support_10",
+      "condition": "support",
+      "submission": 10,
+      "parent": "support_09",
+      "prompt_sha256": "d30e7aa71f9462c835108e9381e17a2e13e3dc91477a61909bcd60584838ce4f",
+      "status": "evaluated",
+      "started_at": "2026-11-10T12:33:10.109863+09:00",
+      "generation_seconds": 300.1517693939968,
+      "usage": {
+        "completion_tokens": 14674,
+        "prompt_tokens": 10762,
+        "total_tokens": 25436,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "2bc67a6d4cc3d6b33e1b5b029601fd420988e22a52f343724ee882d970b11680",
+      "code_sha256": "0620f7489f455b63a1ca3ec952be18ad929584890069fb8069aaa8f8bea5a877",
+      "next_parent": "support_10",
+      "dev_sha256": "55a336c7d7df02d7044a94ed6fe1e594e87deac01f0603ee363381947fccd44f",
+      "finished_at": "2026-11-10T12:56:46.126660+09:00"
+    },
+    "neutral_10": {
+      "name": "neutral_10",
+      "condition": "neutral",
+      "submission": 10,
+      "parent": "neutral_09",
+      "prompt_sha256": "0dd4b2fcc280d8e9cd6623d384f35eff79e8ba9fe269eea3f2a4c0557961b976",
+      "status": "evaluated",
+      "started_at": "2026-11-10T12:56:46.212289+09:00",
+      "generation_seconds": 262.080357963001,
+      "usage": {
+        "completion_tokens": 12921,
+        "prompt_tokens": 7503,
+        "total_tokens": 20424,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "1b0de4d34a657131c9e7dd0c0f4a6fe4b24cbe8a27cd5a899015a143494c6dc5",
+      "code_sha256": "e5e0760fcde6c59ad643f4d85dc86320a930af92d72229cab58cb8f5da7af594",
+      "next_parent": "neutral_10",
+      "dev_sha256": "240d45ec5f9984d71f710d19f23351c3a7f9bee93a1f4452b2cd48ab6ff95d89",
+      "finished_at": "2026-11-10T13:38:15.620038+09:00"
+    },
+    "switch_10": {
+      "name": "switch_10",
+      "condition": "switch",
+      "submission": 10,
+      "parent": "switch_09",
+      "prompt_sha256": "d93dac0faa91336fd5faa2259e4bdcecd5db26e3019aff0c2dfd72489f0bba74",
+      "status": "evaluated",
+      "started_at": "2026-11-10T13:38:15.715461+09:00",
+      "generation_seconds": 485.4954241259984,
+      "usage": {
+        "completion_tokens": 24082,
+        "prompt_tokens": 7436,
+        "total_tokens": 31518,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      },
+      "finish_reason": "stop",
+      "response_model": "Qwen/Qwen3.8-27B",
+      "response_fingerprint": "vllm-0.26.0-tp4-6c75830b",
+      "code_error": null,
+      "response_sha256": "898188dfc74bcc855d80f7a5bcb82aa79518ea454fdb86d56b7421c37d69b8b9",
+      "code_sha256": "d53ee393e7175c6400eb070645d0cc95832b7c22a84c215b42a261745bf0335f",
+      "next_parent": "switch_10",
+      "dev_sha256": "64a04b12a8c41f5195d444f438b53c5b2397261ee201d524bf280743ff13b312",
+      "finished_at": "2026-11-10T14:09:54.361892+09:00"
+    }
+  },
+  "updated_at": "2026-11-10T14:09:54.452232+09:00",
+  "server_runtime": {
+    "checked_at": "2026-11-10T01:39:30.586989+09:00",
+    "served_model": {
+      "id": "Qwen/Qwen3.8-27B",
+      "object": "model",
+      "created": 1794242370,
+      "owned_by": "vllm",
+      "root": "/home/rocklee/CO-Bench/models/Qwen3.8-27B",
+      "parent": null,
+      "max_model_len": 65536,
+      "permission": [
+        {
+          "id": "modelperm-b2c55bb76803dac8",
+          "object": "model_permission",
+          "created": 1794242370,
+          "allow_create_engine": false,
+          "allow_sampling": true,
+          "allow_logprobs": true,
+          "allow_search_indices": false,
+          "allow_view": true,
+          "allow_fine_tuning": false,
+          "organization": "*",
+          "group": null,
+          "is_blocking": false
+        }
+      ]
+    }
+  }
+}

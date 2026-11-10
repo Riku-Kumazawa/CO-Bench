@@ -1,0 +1,537 @@
+Let me design a TSP solver that's effective within a 10-second timeout. I need to use only Python standard library, NumPy, SciPy, or OR-Tools.
+
+Let me think about the best approach:
+
+1. **For small instances (n ≤ 20)**: Use exact DP (Held-Karp algorithm) which is O(2^n * n^2)
+2. **For medium instances (20 < n ≤ 50)**: Use 2-opt/3-opt local search with good initial solutions
+3. **For larger instances**: Use OR-Tools routing solver or a combination of heuristics
+
+Let me think about a robust approach:
+
+**Strategy:**
+1. For n ≤ 20: Use Held-Karp dynamic programming (exact)
+2. For n > 20: Use a multi-start local search approach:
+   - Generate initial solutions using nearest neighbor (with random starts)
+   - Apply 2-opt and Or-opt moves
+   - Use multiple restarts
+   - Use time management to stop before timeout
+
+Actually, let me reconsider. OR-Tools has a routing solver that could work well for medium-sized instances. But for very large instances, it might not finish in 10 seconds.
+
+Let me design a tiered approach:
+
+**Tier 1 (n ≤ 20):** Held-Karp DP - exact solution
+- Time complexity: O(2^n * n^2)
+- For n=20: 2^20 * 400 = ~400M operations... that's too slow in Python
+- Actually for n=18: 2^18 * 324 = ~85M... still slow in pure Python
+- Let me use numpy for some optimization or limit to n ≤ 15 for exact
+
+Wait, let me reconsider. For n=20, Held-Karp in Python would be too slow. Let me limit exact to n ≤ 15 or so, and use heuristics for larger.
+
+Actually, let me think about this more carefully:
+- n ≤ 15: Held-Karp DP (2^15 * 225 = ~7M operations, feasible)
+- n ≤ 20: Could try Held-Karp with numpy vectorization
+- n > 20: Heuristic approach
+
+For the heuristic approach, I'll use:
+1. Nearest neighbor construction with random starts (multiple starts)
+2. 2-opt improvement
+3. Or-opt (move 1, 2, or 3 consecutive cities)
+4. Maybe Lin-Kernighan style moves (k-opt for small k)
+
+Let me also consider using OR-Tools for medium instances.
+
+Actually, let me focus on a very efficient implementation:
+
+1. **n ≤ 16**: Held-Karp (exact)
+2. **n > 16**: Multi-start 2-opt + Or-opt with time management
+
+For the 2-opt implementation, I need to make it fast. Let me use numpy for distance calculations.
+
+Let me code this up:
+
+```python
+import numpy as np
+from itertools import combinations
+import time
+
+def solve(**kwargs):
+    nodes = kwargs.get('nodes', [])
+    n = len(nodes)
+    
+    if n == 0:
+        return {'tour': []}
+    if n == 1:
+        return {'tour': [0]}
+    if n == 2:
+        return {'tour': [0, 1]}
+    
+    start_time = time.time()
+    timeout = 9.0  # Leave 1 second margin
+    
+    # Compute distance matrix
+    coords = np.array(nodes, dtype=np.float64)
+    diff = coords[:, np.newaxis, :] - coords[np.newaxis, :, :]
+    dist = np.sqrt((diff ** 2).sum(axis=-1))
+    
+    # For small instances, use exact DP
+    if n <= 16:
+        tour = held_karp(dist, n)
+        return {'tour': tour}
+    
+    # For larger instances, use heuristic
+    # Multi-start 2-opt + Or-opt
+    best_tour = None
+    best_dist = np.inf
+    
+    # Try multiple random starts
+    rng = np.random.default_rng(42)
+    
+    attempts = 0
+    while time.time() - start_time < timeout:
+        # Generate initial solution
+        if attempts == 0:
+            # Nearest neighbor from node 0
+            tour = nearest_neighbor(dist, n, start=0)
+        elif attempts == 1:
+            tour = nearest_neighbor(dist, n, start=1)
+        elif attempts == 2:
+            tour = random_tour(n, rng)
+        else:
+            tour = random_tour(n, rng)
+        
+        # Improve with 2-opt
+        tour = two_opt(dist, n, tour)
+        
+        # Improve with Or-opt
+        tour = or_opt(dist, n, tour)
+        
+        # Iterate 2-opt and Or-opt until no improvement or timeout
+        improved = True
+        while improved and time.time() - start_time < timeout:
+            improved = False
+            new_tour = two_opt(dist, n, tour)
+            d = tour_cost(dist, new_tour)
+            if d < tour_cost(dist, tour) - 1e-9:
+                tour = new_tour
+                improved = True
+            new_tour = or_opt(dist, n, tour)
+            d = tour_cost(dist, new_tour)
+            if d < tour_cost(dist, tour) - 1e-9:
+                tour = new_tour
+                improved = True
+        
+        # Update best
+        d = tour_cost(dist, tour)
+        if d < best_dist:
+            best_dist = d
+            best_tour = tour[:]
+        
+        attempts += 1
+    
+    return {'tour': best_tour}
+```
+
+Wait, I need to be more careful with the 2-opt implementation to make it efficient. Let me think about this.
+
+For 2-opt: For each pair of edges (i, i+1) and (j, j+1), check if reversing the segment between i+1 and j improves the tour. The improvement is:
+- Remove edges (i, i+1) and (j, j+1)
+- Add edges (i, j) and (i+1, j+1)
+- Improvement = dist[i][j] + dist[i+1][j+1] - dist[i][i+1] - dist[j][j+1]
+
+This is O(n^2) per pass.
+
+For Or-opt: Move a segment of length 1, 2, or 3 from one position to another.
+
+Let me also think about using a different approach for medium instances. Actually, for the best results within 10 seconds, I should:
+
+1. Use a good initial solution (nearest neighbor)
+2. Apply 2-opt to convergence
+3. Apply Or-opt to convergence
+4. Try multiple restarts with different initial solutions
+5. Maybe try a "double bridge" move for diversity
+
+Let me refine the implementation. I'll also add a check: if n is very large (like 100+), I might need to be more careful about the O(n^2) 2-opt passes.
+
+Actually, for n up to maybe 200, O(n^2) 2-opt should still be fast enough. For larger n, I might need to use a different approach.
+
+Let me also consider: for the Held-Karp, with n=16, it's 2^16 * 16^2 = ~16M operations. In Python this might take a few seconds. Let me limit to n=15 to be safe (2^15 * 225 = ~7M).
+
+Actually, let me benchmark mentally:
+- n=15: 2^15 = 32768 states, each with 15 possible last cities = 491,520 DP states. For each state, we transition from up to 15 previous states. Total: ~7.3M operations. In Python, this is maybe 2-5 seconds.
+- n=16: 2^16 = 65536 * 16 = 1M states. Transitions: ~16M operations. Maybe 5-10 seconds.
+
+So let me set the threshold at n=15 for exact, and use heuristics for n>15.
+
+Actually, I can optimize the Held-Karp using numpy. Let me think...
+
+The Held-Karp DP:
+- dp[S][j] = minimum cost to visit all cities in set S, starting at city 0, and ending at city j
+- dp[{0}][0] = 0
+- dp[S][j] = min over i in S\{j} of dp[S\{j}][i] + dist[i][j]
+
+For n=16, the state space is 2^15 * 15 (since city 0 is always in S) = 491,520 states.
+For each state, we need to check up to 14 predecessors.
+Total operations: ~6.9M.
+
+In pure Python with lists, this should be doable in a few seconds. Let me use a more efficient implementation.
+
+Actually, let me use a different approach: since city 0 is the start, I only need to track subsets of {1, 2, ..., n-1}. So the DP table has 2^(n-1) * (n-1) entries.
+
+For n=16: 2^15 * 15 = 491,520 entries. Each entry requires checking up to 14 predecessors. Total: ~6.9M operations.
+
+Let me implement this efficiently. I'll use a flat array and iterate over masks.
+
+Let me write the complete solution now:
+
+```python
+import numpy as np
+import time
+
+def solve(**kwargs):
+    nodes = kwargs.get('nodes', [])
+    n = len(nodes)
+    
+    if n == 0:
+        return {'tour': []}
+    if n == 1:
+        return {'tour': [0]}
+    if n == 2:
+        return {'tour': [0, 1]}
+    
+    start_time = time.time()
+    timeout = 9.5  # Leave margin
+    
+    coords = np.array(nodes, dtype=np.float64)
+    diff = coords[:, np.newaxis, :] - coords[np.newaxis, :, :]
+    dist = np.sqrt((diff ** 2).sum(axis=-1))
+    
+    if n <= 15:
+        tour = held_karp(dist, n, timeout, start_time)
+        return {'tour': tour}
+    
+    # Heuristic for larger n
+    return heuristic_solve(dist, n, start_time, timeout)
+```
+
+Let me think about what makes the heuristic really good:
+
+1. **Multiple diverse initial solutions**: Nearest neighbor from different starts, random, greedy insertion
+2. **2-opt to convergence**
+3. **Or-opt (segment moves of size 1, 2, 3)**
+4. **Double bridge move** for escape from local optima
+5. **Time management**: Stop before timeout, return best found
+
+For very large n (say > 200), the 2-opt O(n^2) per pass might be slow. For n=200, that's 40,000 checks per pass, which should still be fast. For n=1000, that's 1M checks, still manageable.
+
+Actually, let me reconsider the threshold for Held-Karp. With n=15, we have 2^14 * 14 = 229,376 DP entries (since we fix city 0 as start). For each entry, we check up to 13 predecessors. Total: ~3M operations. This should be fast in Python, maybe 1-2 seconds.
+
+Let me also consider: for n between 16 and maybe 25, could I use a branch and bound or a different exact method? Probably not within the time limit. Let me stick with heuristics.
+
+Let me finalize my implementation:
+
+```python
+import numpy as np
+import time
+
+def solve(**kwargs):
+    nodes = kwargs.get('nodes', [])
+    n = len(nodes)
+    
+    if n == 0:
+        return {'tour': []}
+    if n == 1:
+        return {'tour': [0]}
+    if n == 2:
+        return {'tour': [0, 1]}
+    
+    start_time = time.time()
+    timeout = 9.0
+    
+    coords = np.array(nodes, dtype=np.float64)
+    diff = coords[:, np.newaxis, :] - coords[np.newaxis, :, :]
+    dist = np.sqrt((diff ** 2).sum(axis=-1))
+    
+    if n <= 15:
+        tour = held_karp(dist, n)
+        return {'tour': tour}
+    
+    best_tour, best_cost = heuristic_solve(dist, n, start_time, timeout)
+    return {'tour': best_tour}
+
+def held_karp(dist, n):
+    # Fix city 0 as start
+    # dp[mask][j] = min cost to start at 0, visit all cities in mask, end at j
+    # mask is over cities 1..n-1
+    
+    m = n - 1  # number of cities excluding start
+    INF = float('inf')
+    
+    # dp is a 2D array: dp[mask][j] where mask is bitmask over m cities, j is 0..m-1
+    # j corresponds to city j+1
+    dp = np.full((1 << m, m), INF, dtype=np.float64)
+    parent = np.full((1 << m, m), -1, dtype=np.int32)
+    
+    # Base case: mask with only city j visited
+    for j in range(m):
+        dp[1 << j, j] = dist[0, j + 1]
+    
+    # Fill DP
+    for mask in range(1, 1 << m):
+        for j in range(m):
+            if not (mask & (1 << j)):
+                continue
+            if mask == (1 << j):
+                continue  # base case
+            # Try all possible previous cities i
+            best = INF
+            best_i = -1
+            for i in range(m):
+                if i == j or not (mask & (1 << i)):
+                    continue
+                prev_mask = mask & ~(1 << j)
+                val = dp[prev_mask, i] + dist[i + 1, j + 1]
+                if val < best:
+                    best = val
+                    best_i = i
+            dp[mask, j] = best
+            parent[mask, j] = best_i
+    
+    # Find best ending city
+    full_mask = (1 << m) - 1
+    best_cost = INF
+    best_j = -1
+    for j in range(m):
+        cost = dp[full_mask, j] + dist[j + 1, 0]
+        if cost < best_cost:
+            best_cost = cost
+            best_j = j
+    
+    # Reconstruct tour
+    tour = [0]
+    mask = full_mask
+    j = best_j
+    while j != -1:
+        tour.append(j + 1)
+        prev_j = parent[mask, j]
+        mask = mask & ~(1 << j)
+        j = prev_j
+    
+    tour.reverse()
+    # tour[0] should be 0
+    return tour
+```
+
+Wait, I need to double-check the reconstruction. Let me trace through:
+- We start at city 0
+- We end at city best_j + 1
+- The tour is: 0 -> ... -> best_j+1 -> 0
+
+The parent pointers tell us: to reach state (mask, j), we came from (mask without j, parent[mask][j]).
+
+So reconstruction:
+- Start with j = best_j, mask = full_mask
+- The city is j+1
+- Previous city is parent[mask][j] + 1
+- Update mask to remove j
+- Continue until j = -1
+
+Then we need to reverse because we're going backwards from the end.
+
+Let me re-trace:
+- dp[full_mask][best_j] means: start at 0, visit all cities, end at best_j+1
+- parent[full_mask][best_j] = some i, meaning we came from i+1
+- dp[full_mask without best_j][i] means: start at 0, visit all except best_j, end at i+1
+- ...
+- Eventually we reach dp[1<<j][j] which means: start at 0, visit only city j+1, end at j+1
+
+So the tour is: 0, (first city visited), ..., (best_j+1)
+
+Reconstruction:
+```
+tour = [0]
+mask = full_mask
+j = best_j
+while j != -1:
+    tour.append(j + 1)
+    prev_j = parent[mask, j]
+    mask = mask & ~(1 << j)
+    j = prev_j
+tour.reverse()  # Now tour = [last_city, ..., first_city, 0] -> reversed = [0, first_city, ..., last_city]
+```
+
+Wait, after reverse, tour[0] would be the last element before reverse, which is 0. Let me re-check.
+
+Before reverse: tour = [0, best_j+1, prev1+1, prev2+1, ..., first_city+1]
+After reverse: tour = [first_city+1, ..., prev2+1, prev1+1, best_j+1, 0]
+
+That's wrong. The tour should be [0, first_city, ..., best_j+1] and then implicitly back to 0.
+
+Let me fix:
+```
+path = []
+mask = full_mask
+j = best_j
+while j != -1:
+    path.append(j + 1)
+    prev_j = parent[mask, j]
+    mask = mask & ~(1 << j)
+    j = prev_j
+# path = [best_j+1, prev1+1, ..., first_city+1] (reversed order)
+path.reverse()
+# path = [first_city+1, ..., prev1+1, best_j+1]
+tour = [0] + path
+```
+
+Yes, that's correct.
+
+Now for the heuristic:
+
+```python
+def heuristic_solve(dist, n, start_time, timeout):
+    INF = float('inf')
+    best_tour = None
+    best_cost = INF
+    rng = np.random.default_rng(42)
+    
+    def tour_cost(tour):
+        return sum(dist[tour[i], tour[(i+1) % n]] for i in range(n))
+    
+    def nearest_neighbor(start):
+        visited = [False] * n
+        visited[start] = True
+        tour = [start]
+        for _ in range(n - 1):
+            last = tour[-1]
+            # Find nearest unvisited
+            best = -1
+            best_d = INF
+            for j in range(n):
+                if not visited[j] and dist[last, j] < best_d:
+                    best_d = dist[last, j]
+                    best = j
+            visited[best] = True
+            tour.append(best)
+        return tour
+    
+    def random_tour():
+        tour = list(range(n))
+        rng.shuffle(tour)
+        return tour
+    
+    def two_opt(tour):
+        tour = list(tour)
+        improved = True
+        while improved:
+            improved = False
+            for i in range(n - 1):
+                for j in range(i + 2, n):
+                    if i == 0 and j == n - 1:
+                        continue  # same edge
+                    a, b = tour[i], tour[i + 1]
+                    c, d = tour[j], tour[(j + 1) % n]
+                    # Check improvement: remove (a,b) and (c,d), add (a,c) and (b,d)
+                    if dist[a, c] + dist[b, d] < dist[a, b] + dist[c, d] - 1e-10:
+                        # Reverse segment i+1 to j
+                        tour[i + 1:j + 1] = reversed(tour[i + 1:j + 1])
+                        improved = True
+        return tour
+    
+    def or_opt(tour):
+        tour = list(tour)
+        improved = True
+        while improved:
+            improved = False
+            for seg_len in [1, 2, 3]:
+                for i in range(n):
+                    # Segment starts at position i, length seg_len
+                    seg = tour[i:i + seg_len]
+                    if len(seg) < seg_len:
+                        seg = seg + tour[:seg_len - len(seg)]
+                    # Try inserting after position j
+                    for j in range(n):
+                        if j == i or j == i - 1 or j == (i + seg_len - 1) % n:
+                            continue
+                        # Remove seg and insert after j
+                        # Calculate cost change
+                        ...
+        return tour
+```
+
+Hmm, the Or-opt is getting complex. Let me simplify and focus on making 2-opt very efficient, and add a simple version of Or-opt.
+
+Actually, let me reconsider the approach. For the best results within 10 seconds, I think the key is:
+1. Good initial solution
+2. Efficient 2-opt (vectorized with numpy where possible)
+3. Or-opt for additional improvement
+4. Multiple restarts with double-bridge perturbation
+
+Let me write a cleaner, more efficient version:
+
+For 2-opt, the key insight is that we can vectorize the improvement check. For a given tour, the improvement of 2-opt move (i, j) is:
+`dist[tour[i], tour[j]] + dist[tour[i+1], tour[(j+1)%n]] - dist[tour[i], tour[i+1]] - dist[tour[j], tour[(j+1)%n]]`
+
+I can precompute the edge costs and use numpy to find all improving moves at once. But the actual reversal is sequential. Let me just do it in a tight loop.
+
+For n up to 200 or so, O(n^2) 2-opt should be fast enough (40,000 iterations per pass, maybe 10-20 passes to convergence = 400K-800K operations).
+
+Let me write the final solution:
+
+Actually, I realize I should also handle the case where n is very large (like 500+). In that case, even O(n^2) 2-opt might be slow. Let me add a time check inside the 2-opt loop.
+
+Let me also think about using OR-Tools. OR-Tools has a routing solver that uses a guided local search. It might be good for medium instances. But setting it up correctly can be tricky, and it might not beat a well-tuned 2-opt for small-to-medium instances.
+
+I'll go with my own implementation. Let me finalize:
+
+```python
+import numpy as np
+import time
+
+def solve(**kwargs):
+    nodes = kwargs.get('nodes', [])
+    n = len(nodes)
+    
+    if n == 0:
+        return {'tour': []}
+    if n == 1:
+        return {'tour': [0]}
+    if n == 2:
+        return {'tour': [0, 1]}
+    
+    start_time = time.time()
+    timeout = 9.0
+    
+    coords = np.array(nodes, dtype=np.float64)
+    # Compute distance matrix
+    dist = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        diff = coords[i] - coords
+        dist[i] = np.sqrt((diff ** 2).sum(axis=-1))
+    
+    if n <= 15:
+        tour = held_karp(dist, n)
+        return {'tour': tour}
+    
+    best_tour, best_cost = heuristic_solve(dist, n, start_time, timeout)
+    return {'tour': best_tour}
+```
+
+Let me now write the complete, clean implementation. I'll be careful about edge cases and make sure the tour is valid (visits each city exactly once, forms a cycle).
+
+One more thought: for the 2-opt, I should use the "first improvement" or "best improvement" strategy. First improvement is faster per pass but might need more passes. Best improvement finds the best move in each pass but is O(n^2) per pass. For our purposes, first improvement should be fine.
+
+Actually, let me use a slightly different approach for 2-opt: iterate and apply improvements until no more can be found. This is the "steepest descent" or "first improvement" variant.
+
+Let me write the final code now. I'll make it robust and efficient.
+
+One more consideration: the problem says "Return the best feasible solution before the timeout." So I need to make sure I always return a valid tour even if I'm running low on time. I'll keep track of the best tour found and return it.
+
+Let me also add the double-bridge perturbation for diversity:
+- Pick 4 random positions i < j < k < l in the tour
+- Reverse the segments: [0..i], [i+1..j], [j+1..k], [k+1..l], [l+1..end]
+- Actually, double bridge: cut at 4 points and reconnect by swapping the middle two segments
+  - Tour: A | B | C | D -> A | C | B | D (reverse B and C segments)
+
+This is a good way to escape local optima.
+
+Let me finalize the code:

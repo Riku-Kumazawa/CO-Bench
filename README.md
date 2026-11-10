@@ -1,5 +1,15 @@
 # CO-Bench: Benchmarking Language Model Agents in Algorithm Search for Combinatorial Optimization
 
+Local Qwen3.8-27B setup and one-task execution: [RUN_LOCAL.md](RUN_LOCAL.md).
+
+Flow shop feedback pilot (GPT-6.1 Sol, one shared initial solver + three improvements): [RUN_FLOW_PILOT.md](RUN_FLOW_PILOT.md).
+
+Continue the Flow shop pilot to 10 submissions per feedback condition: [RUN_FLOW_CONTINUE.md](RUN_FLOW_CONTINUE.md).
+
+Continue the saved Qwen TSP solver with 27 new generations, always using the latest submission, dev evaluation only: [RUN_TSP_CONTINUE.md](RUN_TSP_CONTINUE.md).
+
+Versioned experiment definitions, editable intervention prompts, and initial/latest/best parent selection: [RUN_EXPERIMENTS.md](RUN_EXPERIMENTS.md).
+
 
 ![example](https://github.com/user-attachments/assets/faf29c44-4904-4d74-9a15-37a038b14e77)
 

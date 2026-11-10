@@ -1,0 +1,17 @@
+{
+  "source": "/home/rocklee/CO-Bench/runs/tsp_qwen_latest_10_submissions/initial",
+  "imported_at": "2026-11-10T16:11:32.316711+09:00",
+  "task": "Travelling salesman problem",
+  "evaluation_reused": true,
+  "artifact_hashes": {
+    "dev.json": "ada0a604e54e2376d95b8a1c7c7c15f66ad8f94ae6445b136c8f473109fa5921",
+    "legacy_manifest.json": "2b044b1f7061871d841d95d825ab92e0d33a0db58b3e267d9ebfddfdbb580237",
+    "prompt.txt": "8f729402739a34ec29ff984494a4843fe895ce9938173b894550a4cf8af523de",
+    "reasoning.txt": "2bc328209e5a83aee3f4c2e687ed2d4f308a18bf6f697878f4c34df2a8fa0fc6",
+    "request.json": "82f7098371d11144eb684e9198030102f3029677c73154ae2a8da56765257c0e",
+    "response.json": "fe78711ea8955d44790777a0ef74c61f514f3f72aa05128a897e8da6d6c2ece9",
+    "response.txt": "97e1667725f0219ec84227a5fd63d571fda9f935889003a2df5512f929ff2a88",
+    "run.json": "ad9b96db8c17fc3d73f7a98bb137e0c582d079d8c00490cca7479d31fb662f80",
+    "solution.py": "46b1bbb867d9b58dd45cb8ffd863ff098176bc8eaf94f06188ec7c9655d2c108"
+  }
+}

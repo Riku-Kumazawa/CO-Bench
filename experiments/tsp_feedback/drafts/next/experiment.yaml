@@ -1,0 +1,40 @@
+schema_version: 1
+name: tsp_feedback
+task: Travelling salesman problem
+data_dir: /home/rocklee/CO-Bench/data
+initials:
+- id: qwen_tsp_01
+  directory: ../../initials/qwen_tsp_01
+parent_policies:
+- initial
+repeats: 9
+steps: 1
+prompts:
+  template: prompts/refine.txt
+  conditions:
+    support: prompts/interventions/support.txt
+    neutral: prompts/interventions/neutral.txt
+    switch: prompts/interventions/switch.txt
+generation:
+  model: Qwen/Qwen3.8-27B
+  api_base: http://127.0.0.1:8000/v1
+  thinking: true
+  reasoning_effort: medium
+  max_tokens: 32768
+  temperature: 1.0
+  top_p: 0.95
+  top_k: 20
+  min_p: 0.0
+  presence_penalty: 0.0
+  repetition_penalty: 1.0
+  timeout_seconds: 7200
+  server_wait_seconds: 600
+seeds:
+  base: 101
+  paired_across_conditions: true
+evaluation:
+  split: dev
+  unsplit_policy: all_as_dev
+  timeout_seconds: 10
+  cpu_num: 1
+  feedback_length: 64

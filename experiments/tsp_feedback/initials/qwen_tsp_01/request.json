@@ -1,0 +1,28 @@
+{
+  "model": "openai/Qwen/Qwen3.8-27B",
+  "api_base": "http://127.0.0.1:8000/v1",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are an expert in Operation Research problem. Solve the following problem:\n\nThe Traveling Salesman Problem (TSP) is a classic combinatorial optimization problem where, given a set of cities with known pairwise distances, the objective is to find the shortest possible tour that visits each city exactly once and returns to the starting city. More formally, given a complete graph G = (V, E) with vertices V representing cities and edges E with weights representing distances, we seek to find a Hamiltonian cycle (a closed path visiting each vertex exactly once) of minimum total weight.\n\n# Implement in Solve Function\n\ndef solve(**kwargs):\n    \"\"\"\n    Solve a TSP instance.\n\n    Args:\n        - nodes (list): List of (x, y) coordinates representing cities in the TSP problem\n                     Format: [(x1, y1), (x2, y2), ..., (xn, yn)]\n\n    Returns:\n        dict: Solution information with:\n            - 'tour' (list): List of node indices representing the solution path\n                            Format: [0, 3, 1, ...] where numbers are indices into the nodes list\n    \"\"\"\n\n    return {\n        'tour': [],\n    }\n\nEnsure your algorithm is as effective as possible. You may use any Python package. Enclose all your code within a code block: ```python ... ``` and name the main function `def solve(**kwargs)`. Your function has a 10-second timeout; aim to return the best possible results within this limit.\nUse only the Python standard library, NumPy, SciPy, or OR-Tools. Other solver packages are not installed. Use one CPU thread. Return the best feasible solution before the timeout."
+    }
+  ],
+  "max_tokens": 32768,
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "presence_penalty": 0.0,
+  "seed": 0,
+  "timeout": 7200,
+  "num_retries": 0,
+  "max_retries": 0,
+  "drop_params": false,
+  "extra_body": {
+    "top_k": 20,
+    "min_p": 0.0,
+    "repetition_penalty": 1.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true,
+      "reasoning_effort": "medium"
+    }
+  }
+}

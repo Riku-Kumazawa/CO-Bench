@@ -1,0 +1,7 @@
+You are an expert in Operation Research problem. Solve the following problem:
+
+{problem_description}
+
+Ensure your algorithm is as effective as possible. Enclose all your code within a code block: ```python ... ``` and name the main function `def solve(**kwargs)`. Your function has a {timeout}-second timeout; aim to return the best possible results within this limit.
+
+Use only the Python standard library, NumPy, SciPy, or OR-Tools. Other solver packages are not installed. Use one CPU thread. Return the best feasible solution before the timeout.
